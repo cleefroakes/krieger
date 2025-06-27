@@ -1,47 +1,41 @@
 {
-  "name": "type-is",
-  "description": "Infer the content-type of a request.",
-  "version": "2.0.1",
-  "contributors": [
-    "Douglas Christopher Wilson <doug@somethingdoug.com>",
-    "Jonathan Ong <me@jongleberry.com> (http://jongleberry.com)"
-  ],
+  "name": "cors",
+  "description": "Node.js CORS middleware",
+  "version": "2.8.5",
+  "author": "Troy Goode <troygoode@gmail.com> (https://github.com/troygoode/)",
   "license": "MIT",
-  "repository": "jshttp/type-is",
+  "keywords": [
+    "cors",
+    "express",
+    "connect",
+    "middleware"
+  ],
+  "repository": "expressjs/cors",
+  "main": "./lib/index.js",
   "dependencies": {
-    "content-type": "^1.0.5",
-    "media-typer": "^1.1.0",
-    "mime-types": "^3.0.0"
+    "object-assign": "^4",
+    "vary": "^1"
   },
   "devDependencies": {
-    "eslint": "7.32.0",
-    "eslint-config-standard": "14.1.1",
-    "eslint-plugin-import": "2.25.4",
-    "eslint-plugin-markdown": "2.2.1",
-    "eslint-plugin-node": "11.1.0",
-    "eslint-plugin-promise": "5.2.0",
-    "eslint-plugin-standard": "4.1.0",
-    "mocha": "9.2.1",
-    "nyc": "15.1.0"
-  },
-  "engines": {
-    "node": ">= 0.6"
+    "after": "0.8.2",
+    "eslint": "2.13.1",
+    "express": "4.16.3",
+    "mocha": "5.2.0",
+    "nyc": "13.1.0",
+    "supertest": "3.3.0"
   },
   "files": [
-    "LICENSE",
+    "lib/index.js",
+    "CONTRIBUTING.md",
     "HISTORY.md",
-    "index.js"
+    "LICENSE",
+    "README.md"
   ],
-  "scripts": {
-    "lint": "eslint .",
-    "test": "mocha --reporter spec --check-leaks --bail test/",
-    "test:debug": "mocha --reporter spec --check-leaks --inspect --inspect-brk test/",
-    "test-ci": "nyc --reporter=lcovonly --reporter=text npm test",
-    "test-cov": "nyc --reporter=html --reporter=text npm test"
+  "engines": {
+    "node": ">= 0.10"
   },
-  "keywords": [
-    "content",
-    "type",
-    "checking"
-  ]
+  "scripts": {
+    "test": "npm run lint && nyc --reporter=html --reporter=text mocha --require test/support/env",
+    "lint": "eslint lib test"
+  }
 }
