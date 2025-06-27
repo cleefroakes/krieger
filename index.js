@@ -1,32 +1,33 @@
-/*!
- * toidentifier
- * Copyright(c) 2016 Douglas Christopher Wilson
- * MIT Licensed
- */
+const express = require('express');
+const cors = require('cors');
+const fs = require('fs');
+const https = require('https');
+const path = require('path');
+const tutorRoutes = require('./routes/tutor');
 
-'use strict'
+const app = express();
 
-/**
- * Module exports.
- * @public
- */
+// Middleware
+app.use(cors());
+app.use(express.json());
+app.use(express.static('public')); // Serve static files
 
-module.exports = toIdentifier
+// Routes
+app.use('/api/tutor', tutorRoutes);
 
-/**
- * Trasform the given string into a JavaScript identifier
- *
- * @param {string} str
- * @returns {string}
- * @public
- */
+// Root route
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
-function toIdentifier (str) {
-  return str
-    .split(' ')
-    .map(function (token) {
-      return token.slice(0, 1).toUpperCase() + token.slice(1)
-    })
-    .join('')
-    .replace(/[^ _0-9a-z]/gi, '')
-}
+// HTTPS credentials (for local development)
+const sslOptions = {
+  key: fs.readFileSync(path.join(__dirname, 'key.pem')),
+  cert: fs.readFileSync(path.join(__dirname, 'cert.pem')),
+};
+
+// HTTPS server
+const PORT = process.env.PORT || 5000;
+https.createServer(sslOptions, app).listen(PORT, () => {
+  console.log(`✅ HTTPS Server running at https://localhost:${PORT}`);
+});
